@@ -125,6 +125,10 @@ testpaths = ["test"]
 looponfailroots = ["src", "test"]
 # looponfailroots is deprecated, this removes the deprecation from the test output
 filterwarnings = ["ignore::DeprecationWarning"]
+markers = [
+    "submitter: mark a test as using the submitter.",
+    "adaptor: mark test as using the adaptor.",
+]
 
 # --- COVERAGE ---
 

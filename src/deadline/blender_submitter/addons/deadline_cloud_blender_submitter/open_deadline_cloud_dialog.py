@@ -137,11 +137,38 @@ def _create_bundle(
         requirements: The host requirements. There are only passed if the user has specified custom host requirements in the UI. If "all available worker hosts" are selected, this is None.
         purpose: The purpose of the job bundle.
     """
+    _create_bundle_internal(
+        widget, job_bundle_dir, settings, queue_parameters, asset_references, requirements, purpose
+    )
+
+
+def _create_bundle_internal(
+    widget: SubmitJobToDeadlineDialog,
+    job_bundle_dir: str,
+    settings: tf.BlenderSubmitterUISettings,
+    queue_parameters: list[dict[str, Any]],
+    asset_references: AssetReferences,
+    requirements: Optional[dict[str, Any]] = None,
+    purpose: Optional[str] = None,
+    prompt_for_saving=True,
+) -> None:
+    """Create and write Deadline job bundle files to the given directory. Also save sticky settings.
+    The internal variation exists so that the functionality can be accessed without a UI.
+
+    Args:
+        widget: The submitter dialog widget.
+        job_bundle_dir: The directory to write the job bundle files to.
+        settings: The job settings.
+        queue_parameters: The queue parameters.
+        asset_references: The asset references.
+        requirements: The host requirements. There are only passed if the user has specified custom host requirements in the UI. If "all available worker hosts" are selected, this is None.
+        purpose: The purpose of the job bundle.
+    """
     # Make sure the output path used for submission is absolute
     settings.output_path = bpy.path.abspath(settings.output_path)
 
     # Run sanity checks on submission
-    sc.run_sanity_checks(settings)
+    sc.run_sanity_checks(settings, prompt_for_saving)
 
     renderable_cameras = bu.get_renderable_cameras(settings.scene_name)
 

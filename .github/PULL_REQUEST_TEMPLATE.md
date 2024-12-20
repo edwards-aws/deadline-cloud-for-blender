@@ -6,6 +6,8 @@
 
 ### How was this change tested?
 
+#### Please run the integration tests and paste the results below
+
 ### Was this change documented?
 
 ### Is this a breaking change?

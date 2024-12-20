@@ -13,9 +13,10 @@ from . import blender_utils
 from . import scene_settings_widget as ssw
 
 
-def run_sanity_checks(settings):
+def run_sanity_checks(settings, prompt_for_saving=True):
     # Prompt user for decision if there are unsaved changes
-    _prompt_unsaved_changes()
+    if prompt_for_saving:
+        _prompt_unsaved_changes()
 
     # Ensure there is a job name.
     if not settings.name:

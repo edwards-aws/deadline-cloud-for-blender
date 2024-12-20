@@ -39,3 +39,6 @@ venv/
 # macOS
 .DS_STORE
 
+# Artifacts from integration tests
+*.blend1
+*.deadline_render_settings.json
