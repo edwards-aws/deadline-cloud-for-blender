@@ -31,7 +31,8 @@ def main(job_history_dir: str, output_dir: str):
     bpy.context.scene.render.resolution_y = 480
 
     QtWidgets.QApplication(sys.argv)
-    widget = create_deadline_dialog()
+    # Test files will end up in the temporary directory, so we can't skip them.
+    widget = create_deadline_dialog(skip_temp_files=False)
 
     settings = widget.job_settings_type()
     widget.shared_job_settings.update_settings(settings)

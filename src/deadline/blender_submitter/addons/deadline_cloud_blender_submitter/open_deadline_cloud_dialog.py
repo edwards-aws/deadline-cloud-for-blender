@@ -21,7 +21,7 @@ from ._version import version
 from ._version import version_tuple as adaptor_version_tuple
 
 
-def create_deadline_dialog(parent=None) -> SubmitJobToDeadlineDialog:
+def create_deadline_dialog(parent=None, skip_temp_files=True) -> SubmitJobToDeadlineDialog:
     """Main function that shows the UI.
 
     Initialize job settings with default values or values from the scene. Build and return a dialogue widget with these settings.
@@ -79,7 +79,7 @@ def create_deadline_dialog(parent=None) -> SubmitJobToDeadlineDialog:
     settings.all_layer_selectable_cameras = [settings.camera_selection]
 
     # Set auto-detected attachments.
-    auto_detected_attachments = _get_auto_detected_assets(settings.project_path)
+    auto_detected_attachments = _get_auto_detected_assets(settings.project_path, skip_temp_files)
 
     # If the user has an OCIO config file set, we will have to upload any directories referenced by that file as job attachments.
     if ocio.get_ocio_path():
@@ -231,8 +231,8 @@ def _create_bundle_internal(
     settings.save_sticky_settings(scene_filename)
 
 
-def _get_auto_detected_assets(project_path: str) -> AssetReferences:
-    files = bu.find_files(project_path)
+def _get_auto_detected_assets(project_path: str, skip_temp_files: bool = True) -> AssetReferences:
+    files = bu.find_files(project_path, skip_temp=skip_temp_files)
 
     # Sort auto-detected attachments to classify files and directories correctly.
     input_filenames = set()
